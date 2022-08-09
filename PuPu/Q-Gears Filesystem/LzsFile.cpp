@@ -62,7 +62,7 @@
      u8 control_byte = 0;
      u8 control_bit = 0;
  
-     while (input_offset < m_BufferSize)
+     while ((u8)input_offset < m_BufferSize)
      {
          if (control_bit == 0)
          {
