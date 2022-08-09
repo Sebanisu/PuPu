@@ -51,7 +51,8 @@ IDs(gcnew List<u32>())
 	{
 		for (int j = i + 1; j < NumFISprites; j++)
 		{
-			if ((Sprites[i]->X == Sprites[j]->X) && (Sprites[i]->Y == Sprites[j]->Y))
+			// Divide by 16 to cover all tiles that could overlap. fhwise13 had issue with tiles not drawn to multiple of 16.
+			if ((Sprites[i]->X/16 == Sprites[j]->X/16) && (Sprites[i]->Y/16 == Sprites[j]->Y/16))
 			{
 				if ((Sprites[i]->ID & 0xFFFFFFF0) == (Sprites[j]->ID & 0xFFFFFFF0))
 				{
