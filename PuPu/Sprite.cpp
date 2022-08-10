@@ -163,11 +163,23 @@ animstate(0)
 		layerid = 0;
 		blendmode = 4;
 	}
-	ID = 0x00000000;	//ID identifies the sprites composing an output file, an ID is 1:1 with a PNG
-	ID += (layerid << 24);
-	ID += (blendmode << 20);
-	ID += (animid << 12);
-	ID += (animstate << 4);	//Bottom 3 bits store overlapping sprites
+	ID = 0x0000'0000;	//ID identifies the sprites composing an output file, an ID is 1:1 with a PNG
+	ID |= ((layerid & 0x7F) << 24);
+	ID |= ((blendmode & 0x07) << 20);
+	ID |= (animid << 12);
+	ID |= (animstate << 4);	//Bottom 3 bits store overlapping sprites
+	if (X % 16 != 0 && Y % 16 != 0)
+	{
+		ID |= 0x8080'0000;
+	}
+	if (X % 16 != 0)
+	{
+		ID |= 0x8000'0000;
+	}
+	if (Y % 16 != 0)
+	{
+		ID |= 0x0080'0000;
+	}
 }
 
 Sprite::~Sprite()

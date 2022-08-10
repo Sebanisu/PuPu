@@ -46,18 +46,19 @@ IDs(gcnew List<u32>())
 	for (int i = 0; i < NumFISprites; i++)	//Build sprites
 	{
 		Sprites[i] = gcnew Sprite(fmap, i, type);
+		//use 2 unused bits for anything that is not divisible by 16
 	}
-	for (int i = 0; i < NumFISprites; i++)	//Separate overlapping layers
+	for (int i = 0; i != NumFISprites; ++i)	//Separate overlapping layers
 	{
-		for (int j = i + 1; j < NumFISprites; j++)
+		for (int j = i + 1; j != NumFISprites; ++j)
 		{
 			// Divide by 16 to cover all tiles that could overlap. fhwise13 had issue with tiles not drawn to multiple of 16.
-			if ((Sprites[i]->X/16 == Sprites[j]->X/16) && (Sprites[i]->Y/16 == Sprites[j]->Y/16))
+			if ((Sprites[i]->ID & 0xFFFFFFF0) == (Sprites[j]->ID & 0xFFFFFFF0))
 			{
-				if ((Sprites[i]->ID & 0xFFFFFFF0) == (Sprites[j]->ID & 0xFFFFFFF0))
+				if ((Sprites[i]->X / 16 == Sprites[j]->X / 16) && (Sprites[i]->Y / 16 == Sprites[j]->Y / 16))
 				{
 					Sprites[j]->ID = Sprites[i]->ID + 1;
-				}
+				}			
 			}
 		}
 	}
