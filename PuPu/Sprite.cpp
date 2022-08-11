@@ -168,10 +168,6 @@ animstate(0)
 	ID |= ((blendmode & 0x07) << 20);
 	ID |= (animid << 12);
 	ID |= (animstate << 4);	//Bottom 3 bits store overlapping sprites
-	if (X % 16 != 0 && Y % 16 != 0)
-	{
-		ID |= 0x8080'0000;
-	}
 	if (X % 16 != 0)
 	{
 		ID |= 0x8000'0000;
