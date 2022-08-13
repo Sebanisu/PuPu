@@ -445,7 +445,7 @@ namespace PuPu {
 							 {
 								 if (depths[i] == 1 || depths[i] == 3)
 								 {
-									 u32 out_length = (128 * 1 * mult) * (256 * mult) * 4; //W * depth * H * Pixel Depth (ARGB1555=2) //Maki 20190522 - now it's argb32
+									 u32 out_length = (128 * 2 * mult) * (256 * mult) * 4; //W * depth * H * Pixel Depth (ARGB1555=2) //Maki 20190522 - now it's argb32
 									 out_buffers[i] = new u8 [out_length];
 									 for (int j = 0; j < (Int32)out_length; j++)
 									 {
@@ -487,7 +487,7 @@ namespace PuPu {
 									 System::IO::FileInfo ^ tempInfo = gcnew System::IO::FileInfo(outPath);
 									 tempInfo->Directory->Create();
 									 //Save image
-									 Image ^ tempImg = GetImage(out_buffers[i], 128 * 1 * mult, 256 * mult,1); //Maki 20190522
+									 Image ^ tempImg = GetImage(out_buffers[i], 128 * 2 * mult, 256 * mult,1); //Maki 20190522
 									 tempImg->Save(outPath, Imaging::ImageFormat::Png);
 								 }
 								 if ((depths[i] == 2 || depths[i] == 3) && out_buffers4[i] != nullptr) //4-bit indexed
@@ -604,12 +604,12 @@ namespace PuPu {
 						 if (depths[field->Sprites[i]->page] == 1 || depths[field->Sprites[i]->page] == 3)
 						 {
 							 int source = (((field->Sprites[i]->Y - Ymin) * mult) * (LWidth * mult)) + ((field->Sprites[i]->X - Xmin) * mult);
-							 int target = ((field->Sprites[i]->SrcY * mult) * (128 * 1 * mult)) + /*(field->Sprites[i]->page * (128 * mult)) +*/ (field->Sprites[i]->SrcX * mult);
+							 int target = ((field->Sprites[i]->SrcY * mult) * (128 * 2 * mult)) + /*(field->Sprites[i]->page * (128 * mult)) +*/ (field->Sprites[i]->SrcX * mult);
 							 for (int j = 0; j < (16 * mult); j++)
 							 {
 								 for (int k = 0; k < (16 * mult); k++)
 								 {				
-									memcpy(&out_buffers[field->Sprites[i]->page][(target + ((j * (128 * 1 * mult)) + k)) * 4], &in_buffer[(source + ((j * (LWidth * mult)) + k)) * 4], 4); //Maki 20190522
+									memcpy(&out_buffers[field->Sprites[i]->page][(target + ((j * (128 * 2 * mult)) + k)) * 4], &in_buffer[(source + ((j * (LWidth * mult)) + k)) * 4], 4); //Maki 20190522
 
 								}
 							 }
